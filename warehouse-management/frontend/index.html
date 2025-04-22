@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Inventaris Gudang</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h3 class="mb-4">Menu</h3>
+                <div class="list-group">
+                    <button class="list-group-item list-group-item-action active" onclick="showSection('inventory')">
+                        Inventaris
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('products')">
+                        Produk
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('transactions')">
+                        Transaksi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="col-md-9 col-lg-10 content">
+                <!-- Inventory Section -->
+                <div id="inventory-section">
+                    <h2>Manajemen Inventaris</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tambah Inventaris</h5>
+                            <form id="inventory-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Produk</label>
+                                    <select class="form-select" id="product-select" required>
+                                        <option value="">Pilih Produk</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jumlah</label>
+                                    <input type="number" class="form-control" id="quantity" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Lokasi Gudang</label>
+                                    <input type="text" class="form-control" id="location" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Daftar Inventaris</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Produk</th>
+                                            <th>Jumlah</th>
+                                            <th>Lokasi</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inventory-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div id="products-section" style="display: none;">
+                    <h2>Manajemen Produk</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tambah Produk</h5>
+                            <form id="product-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Produk</label>
+                                    <input type="text" class="form-control" id="product-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Deskripsi</label>
+                                    <textarea class="form-control" id="product-description" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Kategori</label>
+                                    <input type="text" class="form-control" id="product-category" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Daftar Produk</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nama</th>
+                                            <th>Deskripsi</th>
+                                            <th>Kategori</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="product-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions Section -->
+                <div id="transactions-section" style="display: none;">
+                    <h2>Manajemen Transaksi</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Catat Transaksi</h5>
+                            <form id="transaction-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Produk</label>
+                                    <select class="form-select" id="transaction-product" required>
+                                        <option value="">Pilih Produk</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tipe Transaksi</label>
+                                    <select class="form-select" id="transaction-type" required>
+                                        <option value="in">Masuk</option>
+                                        <option value="out">Keluar</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jumlah</label>
+                                    <input type="number" class="form-control" id="transaction-quantity" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Keterangan</label>
+                                    <textarea class="form-control" id="transaction-notes"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Riwayat Transaksi</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tanggal</th>
+                                            <th>Produk</th>
+                                            <th>Tipe</th>
+                                            <th>Jumlah</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transaction-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
