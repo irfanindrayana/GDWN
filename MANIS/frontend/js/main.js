@@ -219,3 +219,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load initial data
     loadProductData();
 }); 
+
+// Dark Mode Toggle
+const darkModeSwitch = document.getElementById('darkModeSwitch');
+
+// Check for saved theme preference
+if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    darkModeSwitch.checked = true;
+}
+
+// Handle theme switch
+darkModeSwitch.addEventListener('change', function() {
+    if (this.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    }
+});
