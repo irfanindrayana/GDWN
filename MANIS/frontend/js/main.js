@@ -239,3 +239,43 @@ darkModeSwitch.addEventListener('change', function() {
         localStorage.setItem('theme', 'light');
     }
 });
+
+async function deleteProduct(id) {
+    if (!confirm('Apakah Anda yakin ingin menghapus produk ini?')) return;
+
+    try {
+        const response = await fetch(`${CONFIG.PRODUCT_SERVICE}/products/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Produk berhasil dihapus');
+            loadProductData();
+        } else {
+            throw new Error('Gagal menghapus produk');
+        }
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('Gagal menghapus produk');
+    }
+}
+
+async function deleteInventoryItem(id) {
+    if (!confirm('Apakah Anda yakin ingin menghapus item inventaris ini?')) return;
+
+    try {
+        const response = await fetch(`${CONFIG.INVENTORY_SERVICE}/inventory/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Item inventaris berhasil dihapus');
+            loadInventoryData();
+        } else {
+            throw new Error('Gagal menghapus item inventaris');
+        }
+    } catch (error) {
+        console.error('Error deleting inventory item:', error);
+        alert('Gagal menghapus item inventaris');
+    }
+}
